@@ -46,5 +46,5 @@ jobs:
           cd twrp
           . build/envsetup.sh
           export ALLOW_MISSING_DEPENDENCIES=true
-          lunch twrp_b2_ultra-eng
+          lunch omni_B2_Ultra-eng
           mka recoveryimage
