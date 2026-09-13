@@ -36,10 +36,19 @@ jobs:
           repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-14.1 --depth=1
           repo sync -j8 --no-clone-bundle --no-tags --optimized-fetch
 
-      - name: Clone Device Tree
+      - name: Clone and Setup Device Tree
         run: |
           cd twrp
-          git clone https://github.com/superminyon/twrp_android_device_iiif150_b2_ultra.git device/iiif150/b2_ultra
+          git clone https://github.com/superminyon/twrp_android_device_iiif150_b2_ultra.git temp_device
+          mkdir -p device/ant/b2_ultra
+          if [ -d "temp_device/ant/b2_ultra" ]; then
+            cp -r temp_device/ant/b2_ultra/. device/ant/b2_ultra/
+          elif [ -d "temp_device/iiif150/b2_ultra" ]; then
+            cp -r temp_device/iiif150/b2_ultra/. device/ant/b2_ultra/
+          else
+            cp -r temp_device/. device/ant/b2_ultra/
+          fi
+          rm -rf temp_device
 
       - name: Start Building
         run: |
