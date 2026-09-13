@@ -7,11 +7,18 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
+      - name: Maximize build space
+        uses: ublue-os/remove-unwanted-software@v8
+        with:
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-large-packages: 'true'
+          remove-cached-tools: 'true'
+          remove-swapfile: 'false'
+
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Maximize build space
-        uses: ublue-os/remove-unwanted-software@main
 
       - name: Install dependencies
         run: |
@@ -32,7 +39,7 @@ jobs:
       - name: Clone Device Tree
         run: |
           cd twrp
-          git clone https://github.com/KULLANICI_ADINIZ/android_device_iiif150_b2_ultra.git device/iiif150/b2_ultra
+          git clone https://github.com/superminyon/twrp_android_device_iiif150_b2_ultra.git device/iiif150/b2_ultra
 
       - name: Start Building
         run: |
