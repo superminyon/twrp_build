@@ -42,12 +42,26 @@ jobs:
           mkdir -p device/ant/b2_ultra
           git clone https://github.com/superminyon/twrp_android_device_iiif150_b2_ultra.git device/ant/b2_ultra --depth=1
           
-          # Eski ve geçersiz vendorsetup.sh dosyasını kaldırıyoruz
+          # Eski vendorsetup.sh dosyasını kaldırıyoruz
           rm -f device/ant/b2_ultra/vendorsetup.sh
           
-          # Android 14 derleme sisteminin istediği doğru formata göre AndroidProducts.mk güncelleniyor
-          echo "" >> device/ant/b2_ultra/AndroidProducts.mk
-          echo "COMMON_LUNCH_CHOICES := omni_B2_Ultra-eng omni_B2_Ultra-userdebug" >> device/ant/b2_ultra/AndroidProducts.mk
+          # AndroidProducts.mk dosyasını karakter hatası olmadan yeniden oluşturuyoruz
+          cat << 'EOF' > device/ant/b2_ultra/AndroidProducts.mk
+          #
+          # Copyright (C) 2026 The Android Open Source Project
+          # Copyright (C) 2026 SebaUbuntu's TWRP device tree generator
+          #
+          # SPDX-License-Identifier: Apache-2.0
+          #
+
+          PRODUCT_MAKEFILES := \
+              \$(LOCAL_DIR)/omni_B2_Ultra.mk
+
+          COMMON_LUNCH_CHOICES := \
+              omni_B2_Ultra-user \
+              omni_B2_Ultra-userdebug \
+              omni_B2_Ultra-eng
+          EOF
 
       - name: Start Building
         run: |
