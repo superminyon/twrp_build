@@ -41,7 +41,6 @@ jobs:
           cd twrp
           mkdir -p device/ant/b2_ultra
           git clone https://github.com/superminyon/twrp_android_device_iiif150_b2_ultra.git device/ant/b2_ultra --depth=1
-          # Lunch komutunun hata vermemesi için vendorsetup.sh ekliyoruz
           echo "add_lunch_combo omni_B2_Ultra-eng" > device/ant/b2_ultra/vendorsetup.sh
           echo "add_lunch_combo omni_B2_Ultra-userdebug" >> device/ant/b2_ultra/vendorsetup.sh
 
