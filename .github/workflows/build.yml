@@ -36,11 +36,14 @@ jobs:
           repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-14.1 --depth=1
           repo sync -j8 --no-clone-bundle --no-tags --optimized-fetch
 
-      - name: Setup Device Tree
+      - name: Setup Device Tree & Vendorsetup
         run: |
           cd twrp
-          mkdir -p device/ant
-          git clone https://github.com/superminyon/twrp_android_device_iiif150_b2_ultra.git device/ant/b2_ultra
+          mkdir -p device/ant/b2_ultra
+          git clone https://github.com/superminyon/twrp_android_device_iiif150_b2_ultra.git device/ant/b2_ultra --depth=1
+          # Lunch komutunun hata vermemesi için vendorsetup.sh ekliyoruz
+          echo "add_lunch_combo omni_B2_Ultra-eng" > device/ant/b2_ultra/vendorsetup.sh
+          echo "add_lunch_combo omni_B2_Ultra-userdebug" >> device/ant/b2_ultra/vendorsetup.sh
 
       - name: Start Building
         run: |
